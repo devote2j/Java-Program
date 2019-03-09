@@ -1,0 +1,219 @@
+/***
+ * Program: 	A GUI program to get input from users and calculate monthly payment, year total payment
+ * and eligibility according to the income inputs. 
+ * 
+ * @author:		Yang,Bowen
+ *
+ * Created: 	3/8/2019
+ */
+
+import java.text.DecimalFormat;
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.paint.Color;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Background;
+
+
+public class LoanDriver extends Application {
+
+	Color backgroundColor = null;
+
+	BackgroundFill backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+	Background background = new Background(backgroundFill);
+
+	private double userTextField1Num = 0.0;
+	private double userTextField2Num = 0.0;
+	private double userTextField3Num = 0.0;
+	private double userTextField4Num = 0.0;
+	private double userTextField5Num = 0.0;
+	private double userTextField6Num = 0.0;
+	private int userTextField7Num = 0;
+	private double userTextField8Num = 0.0;
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	@Override
+	public void start(Stage primaryStage) {
+		final String FONT_NAME = "Georgia";
+		final double ELIGIBILITY_PERCENTAGE = 0.25;
+
+		primaryStage.setTitle("Loan Payment and Eligibility Calculator Form");
+
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.CENTER);
+		grid.setHgap(15);
+		grid.setVgap(20);
+		grid.setPadding(new Insets(10, 10, 10, 10));
+
+		//	Salary and wages widgets
+		Label label1 = new Label("Salary and wages");
+		label1.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label1, 0, 0); //	Column 0, row 0
+
+		TextField userTextField1 = new TextField();
+		userTextField1.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField1, 1, 0); //	Column 1, row 0
+
+		//	Interest income widgets
+		Label label2 = new Label("Interest income");
+		label2.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label2, 0, 1); //	Column 0, row 1
+
+		TextField userTextField2 = new TextField();
+		userTextField2.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField2, 1, 1); //	Column 1, row 1
+
+		//	Investment income widgets
+		Label label3 = new Label("Investment income");
+		label3.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label3, 0, 2); //	Column 0, row 2
+
+		TextField userTextField3 = new TextField();
+		userTextField3.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField3, 1, 2); //	Column 1, row 2
+
+		//	Other income widgets
+		Label label4 = new Label("Other income");
+		label4.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label4, 0, 3); //	Column 0, row 3
+
+		TextField userTextField4 = new TextField();
+		userTextField4.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField4, 1, 3); //	Column 1, row 3
+
+		//	Total income widgets
+		Label label5 = new Label("Total income");
+		label5.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label5, 0, 4); //	Column 0, row 4
+
+		TextField userTextField5 = new TextField();
+		userTextField5.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField5, 1, 4); //	Column 1, row 4
+
+		//	Annual interest rate widgets
+		Label label6 = new Label("Annual interest rate(n.nnn%)");
+		label6.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label6, 4, 0); //	Column 4, row 0
+
+		TextField userTextField6 = new TextField();
+		userTextField6.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField6, 5, 0); //	Column 5, row 0
+
+		//	Term in years widgets
+		Label label7 = new Label("Term in years");
+		label7.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label7, 4, 1); //	Column 4, row 1
+
+		TextField userTextField7 = new TextField();
+		userTextField7.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField7, 5, 1); //	Column 5, row 1
+
+		//	Loan amount widgets
+		Label label8 = new Label("Loan amount");
+		label8.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label8, 4, 2); //	Column 4, row 2
+
+		TextField userTextField8 = new TextField();
+		userTextField8.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField8, 5, 2); //	Column 5, row 2
+
+		//	Monthly payment widgets
+		Label label9 = new Label("Monthly payment");
+		label9.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label9, 4, 3); //	Column 4, row 3
+
+		TextField userTextField9 = new TextField();
+		userTextField9.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField9, 5, 3); //	Column 5, row 3
+
+		//	Total payments over life of loan widgets
+		Label label10 = new Label("Total payments over life of loan");
+		label10.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(label10, 4, 4); //	Column 4, row 4
+
+		TextField userTextField10 = new TextField();
+		userTextField10.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(userTextField10, 5, 4); //	Column 5, row 4
+		
+		//	Text keyPressNotification
+		Text keyPressNotification = new Text();
+		keyPressNotification.setFont(Font.font(FONT_NAME, FontWeight.BOLD, 14));
+		GridPane.setConstraints(keyPressNotification, 4, 5);
+	
+		// 	Button1
+		Button button1 = new Button();
+		button1.setText("Calculate Payment");
+		button1.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		GridPane.setConstraints(button1, 0, 5);
+
+		//	Button1 action
+		button1.setOnAction(e -> {
+			inputToNumber(userTextField1.getText(), userTextField2.getText(), userTextField3.getText(), userTextField4.getText(),
+			    userTextField6.getText(), userTextField7.getText(), userTextField8.getText());
+			userTextField5Num = userTextField1Num + userTextField2Num + userTextField3Num + userTextField4Num;
+			Loan loan = new Loan();
+			loan.setAnnualInterestRate(userTextField6Num);
+			loan.setTermInYears(userTextField7Num);
+			loan.setLoanAmount(userTextField8Num);
+			loan.calcMonthlyPayment();
+			loan.calcTotalPayment();
+			userTextField5.setText("" + userTextField5Num);
+			userTextField9.setText(new DecimalFormat("##.##").format(loan.getMonthlyPayment()));
+			userTextField10.setText(new DecimalFormat("##.##").format(loan.getTotalPayment()));
+
+			//	Calculate eligibility
+			double eligibilityPercentage = loan.getMonthlyPayment() / (userTextField5Num / 12);
+			if(eligibilityPercentage > ELIGIBILITY_PERCENTAGE) {
+				keyPressNotification.setText("Sorry, you are not eligible for the loan.\nYour monthly payment takes more than 25%\nof your "
+						+ "total monthly income which is: " + new DecimalFormat("##.##").format(eligibilityPercentage * 100) + "%.");
+			}
+			else {
+				keyPressNotification.setText("You are eligible for the loan.\nYour monthly payment takes " + new DecimalFormat("##.##").format(eligibilityPercentage * 100) +
+						"%" + "\nof your total monthly income.");
+			}
+		});
+		
+		//	Button2 
+		Button button2 = new Button();
+		button2.setText("Cancel");
+		button2.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		button2.setOnAction(e -> primaryStage.close());
+		GridPane.setConstraints(button2, 1, 5);
+		
+		//	Add all widgets
+		grid.getChildren().addAll(label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, userTextField1,
+				userTextField2, userTextField3, userTextField4, userTextField5, userTextField6, userTextField7, userTextField8,
+				userTextField9, userTextField10, keyPressNotification, button1, button2);
+
+		Scene scene = new Scene(grid, 1100, 450);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+	}
+	
+	//	Convert all user inputs to numbers 
+	public void inputToNumber(String userTextField1, String userTextField2, String userTextField3, String userTextField4,
+					String userTextField6, String userTextField7, String userTextField8) {
+    userTextField1Num = Double.parseDouble(userTextField1);
+		userTextField2Num = Double.parseDouble(userTextField2);
+		userTextField3Num = Double.parseDouble(userTextField3);
+		userTextField4Num = Double.parseDouble(userTextField4);
+		userTextField6Num = Double.parseDouble(userTextField6) / 100;	// Calculate annual interest rate according to the n.nnn% input
+		userTextField7Num = Integer.parseInt(userTextField7);
+		userTextField8Num = Double.parseDouble(userTextField8);
+  }
+}
