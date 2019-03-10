@@ -5,7 +5,7 @@ public class Loan {
 	private double loanAmount;
 	private double monthlyPayment;
 	private double totalPayment;
-	
+
 	public Loan(double annualInterestRate, int termInYears, double loanAmount, double monthlyPayment,
 			double totalPayment) {
 		super();
@@ -51,14 +51,14 @@ public class Loan {
 	public double getTotalPayment() {
 		return totalPayment;
 	}
-	
+
 	public void calcMonthlyPayment() {
 		double monthlyInterestRate = annualInterestRate / 12;
 		int termInMonths = termInYears * 12;
 		double annuityFactor = ((1 - ( 1 / Math.pow((1 + monthlyInterestRate), termInMonths))) / monthlyInterestRate);
 		monthlyPayment = loanAmount / annuityFactor;
 	}
-	
+
 	public void calcTotalPayment() {
 		totalPayment = monthlyPayment * termInYears * 12;
 	}

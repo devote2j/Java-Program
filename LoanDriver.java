@@ -1,7 +1,8 @@
 /***
  * Program: 	A GUI program to get input from users and calculate monthly payment, year total payment
- * and eligibility according to the income inputs. 
- * 
+ * and eligibility according to the income inputs. If user enter non-numeric value. The background color
+ * of any TextField in which a user types will change to red.
+ *
  * @author:		Yang,Bowen
  *
  * Created: 	3/8/2019
@@ -23,6 +24,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.StrokeType;
+import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.BorderWidths;
 
 
 public class LoanDriver extends Application {
@@ -59,6 +69,23 @@ public class LoanDriver extends Application {
 		grid.setVgap(20);
 		grid.setPadding(new Insets(10, 10, 10, 10));
 
+		//	Create borders
+		Paint borderColor = new Color(0, 0, 0, 0.6);
+
+		BorderStrokeStyle borderStrokeStyle = new BorderStrokeStyle(StrokeType.OUTSIDE, StrokeLineJoin.ROUND, StrokeLineCap.ROUND, 0.0, 0.0, null);
+
+		CornerRadii cornerRadii = new CornerRadii(4.0);
+
+		BorderWidths borderWidth = new BorderWidths(2.0);
+
+		BorderStroke borderStroke = new BorderStroke(borderColor, borderStrokeStyle, cornerRadii, borderWidth);
+
+		BorderStroke[] borderStrokeArray = new BorderStroke[1];
+
+		borderStrokeArray[0] = borderStroke;
+
+		Border border = new Border(borderStrokeArray);
+
 		//	Salary and wages widgets
 		Label label1 = new Label("Salary and wages");
 		label1.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
@@ -66,6 +93,25 @@ public class LoanDriver extends Application {
 
 		TextField userTextField1 = new TextField();
 		userTextField1.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField1.setBorder(border);
+		userTextField1.setOnKeyTyped(e -> {
+			boolean allDigits = userTextField1.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField1.getText());
+
+			if(allValidNumbers || allDigits) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField1.setBackground(background);
+		});
+
 		GridPane.setConstraints(userTextField1, 1, 0); //	Column 1, row 0
 
 		//	Interest income widgets
@@ -75,7 +121,26 @@ public class LoanDriver extends Application {
 
 		TextField userTextField2 = new TextField();
 		userTextField2.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField2.setBorder(border);
 		GridPane.setConstraints(userTextField2, 1, 1); //	Column 1, row 1
+
+		userTextField2.setOnKeyPressed(e -> {
+			boolean allDigits = userTextField2.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField2.getText());
+
+			if(allDigits || allValidNumbers) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField2.setBackground(background);
+		});
 
 		//	Investment income widgets
 		Label label3 = new Label("Investment income");
@@ -84,7 +149,26 @@ public class LoanDriver extends Application {
 
 		TextField userTextField3 = new TextField();
 		userTextField3.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField3.setBorder(border);
 		GridPane.setConstraints(userTextField3, 1, 2); //	Column 1, row 2
+
+		userTextField3.setOnKeyTyped(e -> {
+			boolean allDigits = userTextField3.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField3.getText());
+
+			if(allDigits || allValidNumbers) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField3.setBackground(background);
+		});
 
 		//	Other income widgets
 		Label label4 = new Label("Other income");
@@ -93,7 +177,26 @@ public class LoanDriver extends Application {
 
 		TextField userTextField4 = new TextField();
 		userTextField4.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField4.setBorder(border);
 		GridPane.setConstraints(userTextField4, 1, 3); //	Column 1, row 3
+
+		userTextField4.setOnKeyTyped(e -> {
+			boolean allDigits = userTextField4.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField4.getText());
+
+			if(allDigits || allValidNumbers) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField4.setBackground(background);
+		});
 
 		//	Total income widgets
 		Label label5 = new Label("Total income");
@@ -102,6 +205,7 @@ public class LoanDriver extends Application {
 
 		TextField userTextField5 = new TextField();
 		userTextField5.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField5.setBorder(border);
 		GridPane.setConstraints(userTextField5, 1, 4); //	Column 1, row 4
 
 		//	Annual interest rate widgets
@@ -111,7 +215,26 @@ public class LoanDriver extends Application {
 
 		TextField userTextField6 = new TextField();
 		userTextField6.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField6.setBorder(border);
 		GridPane.setConstraints(userTextField6, 5, 0); //	Column 5, row 0
+
+		userTextField6.setOnKeyTyped(e -> {
+			boolean allDigits = userTextField6.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField6.getText());
+
+			if(allDigits || allValidNumbers) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField6.setBackground(background);
+		});
 
 		//	Term in years widgets
 		Label label7 = new Label("Term in years");
@@ -120,7 +243,26 @@ public class LoanDriver extends Application {
 
 		TextField userTextField7 = new TextField();
 		userTextField7.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField7.setBorder(border);
 		GridPane.setConstraints(userTextField7, 5, 1); //	Column 5, row 1
+
+		userTextField7.setOnKeyTyped(e -> {
+			boolean allDigits = userTextField7.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField7.getText());
+
+			if(allDigits || allValidNumbers) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField7.setBackground(background);
+		});
 
 		//	Loan amount widgets
 		Label label8 = new Label("Loan amount");
@@ -129,7 +271,26 @@ public class LoanDriver extends Application {
 
 		TextField userTextField8 = new TextField();
 		userTextField8.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField8.setBorder(border);
 		GridPane.setConstraints(userTextField8, 5, 2); //	Column 5, row 2
+
+		userTextField8.setOnKeyTyped(e -> {
+			boolean allDigits = userTextField8.getText().chars().allMatch(Character::isDigit);
+			boolean allValidNumbers = isNumeric(userTextField8.getText());
+
+			if(allDigits || allValidNumbers) {
+				backgroundColor = Color.rgb(255, 255, 255);
+			}
+			else {
+				backgroundColor = Color.rgb(255, 0, 0, 0.6);
+			}
+
+			backgroundFill = new BackgroundFill(backgroundColor, null, null);
+
+			background = new Background(backgroundFill);
+
+			userTextField8.setBackground(background);
+		});
 
 		//	Monthly payment widgets
 		Label label9 = new Label("Monthly payment");
@@ -138,6 +299,7 @@ public class LoanDriver extends Application {
 
 		TextField userTextField9 = new TextField();
 		userTextField9.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField9.setBorder(border);
 		GridPane.setConstraints(userTextField9, 5, 3); //	Column 5, row 3
 
 		//	Total payments over life of loan widgets
@@ -147,13 +309,14 @@ public class LoanDriver extends Application {
 
 		TextField userTextField10 = new TextField();
 		userTextField10.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
+		userTextField10.setBorder(border);
 		GridPane.setConstraints(userTextField10, 5, 4); //	Column 5, row 4
-		
+
 		//	Text keyPressNotification
 		Text keyPressNotification = new Text();
 		keyPressNotification.setFont(Font.font(FONT_NAME, FontWeight.BOLD, 14));
 		GridPane.setConstraints(keyPressNotification, 4, 5);
-	
+
 		// 	Button1
 		Button button1 = new Button();
 		button1.setText("Calculate Payment");
@@ -186,14 +349,14 @@ public class LoanDriver extends Application {
 						"%" + "\nof your total monthly income.");
 			}
 		});
-		
-		//	Button2 
+
+		//	Button2
 		Button button2 = new Button();
 		button2.setText("Cancel");
 		button2.setFont(Font.font(FONT_NAME, FontWeight.NORMAL, 18));
 		button2.setOnAction(e -> primaryStage.close());
 		GridPane.setConstraints(button2, 1, 5);
-		
+
 		//	Add all widgets
 		grid.getChildren().addAll(label1, label2, label3, label4, label5, label6, label7, label8, label9, label10, userTextField1,
 				userTextField2, userTextField3, userTextField4, userTextField5, userTextField6, userTextField7, userTextField8,
@@ -202,10 +365,10 @@ public class LoanDriver extends Application {
 		Scene scene = new Scene(grid, 1100, 450);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
+
 	}
-	
-	//	Convert all user inputs to numbers 
+
+	//	Convert all user inputs to numbers
 	public void inputToNumber(String userTextField1, String userTextField2, String userTextField3, String userTextField4,
 					String userTextField6, String userTextField7, String userTextField8) {
     userTextField1Num = Double.parseDouble(userTextField1);
@@ -215,5 +378,16 @@ public class LoanDriver extends Application {
 		userTextField6Num = Double.parseDouble(userTextField6) / 100;	// Calculate annual interest rate according to the n.nnn% input
 		userTextField7Num = Integer.parseInt(userTextField7);
 		userTextField8Num = Double.parseDouble(userTextField8);
-  }
+	}
+
+	//	Test if the string input in the TextField is plain number
+	public static boolean isNumeric(String inputString) {
+		try {
+			Double.parseDouble(inputString);
+		}
+		catch(NumberFormatException | NullPointerException e) {
+			return false;
+		}
+		return true;
+	}
 }
